@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace sum_of_two
 {
@@ -9,7 +10,7 @@ namespace sum_of_two
             var input = new int[] { 2, 7, 11, 15 };
             var target = 9;
 
-            var output = SumOfTwoBruteForce(input, target);
+            var output = SumOfTwoByBruteForce(input, target);
             Console.Write("Result of Bruteforce Method: ");
             foreach (var index in output)
             {
@@ -24,9 +25,20 @@ namespace sum_of_two
             {
                 Console.Write($"{index} ");
             }
+
+            Console.WriteLine();
+
+            output = SumOfTwoByHashTable(input, target);
+            Console.Write("Result of Hashtable Method: ");
+            foreach (var index in output)
+            {
+                Console.Write($"{index} ");
+            }
+
+            Console.ReadLine();
         }
 
-        static int[] SumOfTwoBruteForce(int[] input, int target)
+        static int[] SumOfTwoByBruteForce(int[] input, int target)
         {
             for (int i = 0; i < input.Length; i++)
             {
@@ -56,6 +68,21 @@ namespace sum_of_two
 
                 if (input[leftPtr] + input[rightPtr] < target)
                     leftPtr++;
+            }
+
+            return new int[] { };
+        }
+
+        static int[] SumOfTwoByHashTable(int[] input, int target)
+        {
+            var hashTable = new Hashtable();
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (hashTable.ContainsKey(target - input[i]))
+                    return new int[] { (int)hashTable[target - input[i]], i };
+                else
+                    hashTable.Add(input[i], i);
             }
 
             return new int[] { };
